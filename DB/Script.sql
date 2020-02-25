@@ -1,0 +1,37 @@
+CREATE DATABASE BooksDB;
+GO
+USE BooksDB;
+
+CREATE Table Authors
+(
+	AuthorId INT IDENTITY(1,1),
+	FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    CONSTRAINT PK_Authors PRIMARY KEY(AuthorId)
+)
+
+CREATE TABLE Books
+(
+	BookId INT IDENTITY(1,1),
+	Title NVARCHAR(50) NOT NULL,
+	AuthorId INT NOT NULL,
+	CONSTRAINT FK_Books_AuthorId FOREIGN KEY (AuthorId) REFERENCES Authors(AuthorId),
+	CONSTRAINT PK_Books PRIMARY KEY(BookId)
+)
+    
+CREATE TABLE Shelfs	
+(
+	ShelfId INT IDENTITY(1,1), 
+	Description NVARCHAR(50) NOT NULL,
+	CONSTRAINT PK_Shelfs PRIMARY KEY(ShelfId)
+)
+
+CREATE TABLE ShelfBooks
+(
+	ShelfBookId INT IDENTITY(1,1),
+	ShelfId INT NOT NULL,
+	BookId INT NOT NULL,
+	CONSTRAINT FK_ShelfBooks_ShelfId FOREIGN KEY (ShelfId) REFERENCES Shelfs(ShelfId),
+	CONSTRAINT FK_ShelfBooks_BookId FOREIGN KEY (BookId) REFERENCES Books(BookId),
+	CONSTRAINT PK_ShelfBooks PRIMARY KEY(ShelfBookId) 
+)
